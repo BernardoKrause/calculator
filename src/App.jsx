@@ -3,6 +3,7 @@ import './App.css'
 
 function App() {
   const [calc, setCalc] = useState("");
+  const [result, setResult] = useState(null);
   const operations = ["+", "-", "*", "/"];
 
   const calculate = (value) => {
@@ -24,7 +25,9 @@ function App() {
         <button 
           key={i}
           onClick={() => {
-            /* TA DANDO TUDO ERRADO AQUI CONSERTA */
+            if (result != null) {
+              allClear();
+            }
             calculate(i.toString());
           }}
         >
@@ -36,11 +39,13 @@ function App() {
   }
 
   const allClear = () => { 
+    /* O PROBLEMA TA AQUI */
     setCalc("");
   }
 
   const equal = () => {
     setCalc(eval(calc).toString());
+    setResult(calc);
   }
 
   return (
