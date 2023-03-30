@@ -1,36 +1,34 @@
 import { useState } from 'react';
 import './App.css'
 
+import { FaPlus , FaTimes, FaMinus, FaDivide, FaEquals } from 'react-icons/fa'
+
+
 function App() {
   const [calc, setCalc] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState("0");
   const operations = ["+", "-", "*", "/"];
 
   const calculate = (value) => {
-    if ((operations.includes(value) && calc === "") || (operations.includes(value) && operations.includes(calc.slice(-1)))) {
+    if (calc.includes(value) && operations.includes(value)) {
       return;
     }
-    setCalc(calc + value);
+    if (calc === "" && operations.includes(value)) {
+      return;
+    } 
 
-    /*if (operations.includes(value)) {
-      setResult(eval(calc + value).toString());
-    }*/
+    setCalc(calc + value);
   }
   
   const generateNumbers = () => {
     const numbers = [];
 
-    for (let i = 1; i < 10; i++) {
+    for (let i = 9; i >= 0; i--) {
       numbers.push(
-        <button 
-          key={i}
-          onClick={() => {
-            if (result != null) {
-              allClear();
-            }
-            calculate(i.toString());
-          }}
-        >
+        <button key={i}
+          onClick={ () => {
+            calculate(i);
+          }}>
           {i}
         </button>
       );
@@ -38,43 +36,43 @@ function App() {
     return numbers;
   }
 
-  const allClear = () => { 
-    /* O PROBLEMA TA AQUI */
+  const Clear = () => { 
     setCalc("");
+    setResult("0");
   }
 
-  const equal = () => {
-    setCalc(eval(calc).toString());
-    setResult(calc);
+  const equal = async () => {
+    setCalc(calc.toString());
+    setResult(eval(calc));
+    setCalc("");
   }
 
   return (
     <div className='App'>
       <div className="calculator">
         <div className='display'>
-          <span>{calc ? calc : "0"}</span> 
+          <span>{calc ?  calc : result}</span>
         </div>
         <div className='operators'>
-          <button onClick={allClear}>AC</button>
-          <button onClick={() => calculate("/")}>/</button>
-          <button onClick={() => calculate("*")}>*</button>
-          <button onClick={() => calculate("-")}>-</button>
-          <button onClick={() => calculate("+")}>+</button>
-          <button onClick={equal}>=</button>
+          <button onClick={Clear}>C</button>
+          <button onClick={() => calculate("/")}>
+            <FaDivide />
+          </button>
+          <button onClick={() => calculate("*")}>
+            <FaTimes />
+          </button>
+          <button onClick={() => calculate("-")}>
+            <FaMinus />
+          </button>
+          <button onClick={() => calculate("+")}>
+            <FaPlus />
+          </button>
+          <button onClick={equal}>
+            <FaEquals />
+          </button>
         </div>
         <div className='numbers'>
           {generateNumbers()}
-          <button 
-            onClick={() => {
-              if (calc != null) {
-                allClear();
-              } else {
-                calculate((0).toString());
-              }
-            }}
-            >
-            0
-          </button>
         </div>
       </div>
     </div>
