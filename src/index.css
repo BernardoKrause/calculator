@@ -1,0 +1,73 @@
+:root {
+  --dark: #121214;
+  --darker: #0b0b0c;
+  --light: #cecece;
+  --purple: #260733;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--light);
+}
+
+body {
+  background-color: var(--dark);
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.calculator {
+  min-width: 360px;
+  max-width: 400px;
+  min-height: 380px;
+  max-height: 4200px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.452);
+  background-color: var(--darker);
+  border-radius: 1em;
+  padding: 8px;
+}
+
+.display {
+  padding: 20px;
+  text-align: end;
+  padding: 24px 12px;
+  font-size: 3em;
+}
+
+.operators {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+}
+
+.operators button {
+  flex: 1 1 0%;
+}
+
+.numbers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 12px;
+  gap: 8px;
+}
+
+.numbers button {
+  flex: 1 1 26%;
+  max-width: 25%;
+}
+
+button {
+  transition: .7s;
+}
+
+button:hover {
+  opacity: 0.8;
+}
