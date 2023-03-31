@@ -7,17 +7,28 @@ import { FaPlus , FaTimes, FaMinus, FaDivide, FaEquals } from 'react-icons/fa'
 function App() {
   const [calc, setCalc] = useState("");
   const [result, setResult] = useState("0");
+  const [verify, setVerify] = useState(false);
   const operations = ["+", "-", "*", "/"];
 
   const calculate = (value) => {
     if (calc.includes(value) && operations.includes(value)) {
       return;
     }
-    if (calc === "" && operations.includes(value)) {
+    if (calc === "" && operations.includes(value) || (calc === "" && value === ".")){
       return;
-    } 
+    }
+    
 
     setCalc(calc + value);
+  }
+
+  const verifyPoint = () => {
+    if (verify === true) {
+      return;
+    } else {
+        setVerify(true);
+        calculate(".");
+    }
   }
   
   const generateNumbers = () => {
@@ -39,12 +50,17 @@ function App() {
   const Clear = () => { 
     setCalc("");
     setResult("0");
+    setVerify(false);
   }
 
   const equal = async () => {
+    if (calc === "") {
+      return;
+    }
     setCalc(calc.toString());
     setResult(eval(calc));
     setCalc("");
+    setVerify(false);
   }
 
   return (
@@ -55,16 +71,28 @@ function App() {
         </div>
         <div className='operators'>
           <button onClick={Clear}>C</button>
-          <button onClick={() => calculate("/")}>
+          <button onClick={() => {
+              calculate("/");
+              setVerify(false);
+            }}>
             <FaDivide />
           </button>
-          <button onClick={() => calculate("*")}>
+          <button onClick={() => {
+              calculate("*");
+              setVerify(false);
+            }}>
             <FaTimes />
           </button>
-          <button onClick={() => calculate("-")}>
+          <button onClick={() => {
+              calculate("-");
+              setVerify(false);
+            }}>
             <FaMinus />
           </button>
-          <button onClick={() => calculate("+")}>
+          <button onClick={() => {
+              calculate("+");
+              setVerify(false);
+            }}>
             <FaPlus />
           </button>
           <button onClick={equal}>
@@ -73,6 +101,9 @@ function App() {
         </div>
         <div className='numbers'>
           {generateNumbers()}
+          <button className='point' onClick={() => {
+              verifyPoint();
+            }}>.</button>
         </div>
       </div>
     </div>

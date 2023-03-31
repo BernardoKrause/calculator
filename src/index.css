@@ -63,6 +63,10 @@ body {
   gap: 8px;
 }
 
+.numbers .point {
+  flex-shrink: inherit;
+}
+
 .numbers button {
   flex: 1 1 26%;
   max-width: 25%;
